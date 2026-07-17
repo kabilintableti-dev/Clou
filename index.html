@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eskiz Akademi — Güzel Sanatlara Hazırlık</title>
+<meta name="description" content="Eskiz Akademi, güzel sanatlar fakültelerine ve liselerine hazırlık için kurulmuş bir atölye okulu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,500&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F8F8F6;
+    --charcoal:#2F3133;
+    --dark:#444444;
+    --gold:#C5A04D;
+    --white:#FFFFFF;
+  }
+  *{margin:0; padding:0; box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:.001ms !important; transition-duration:.001ms !important;} }
+
+  body{
+    background:var(--bg); color:var(--charcoal);
+    font-family:'Manrope', sans-serif; font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{display:block; max-width:100%;}
+  .wrap{max-width:1360px; margin:0 auto; padding:0 56px;}
+  @media (max-width:900px){ .wrap{padding:0 24px;} }
+
+  h1,h2,h3,h4,.serif{ font-family:'Bodoni Moda', serif; font-weight:500; letter-spacing:-0.01em; }
+
+  .eyebrow{
+    font-family:'Manrope',sans-serif; font-size:12px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--gold); font-weight:600; display:inline-block; margin-bottom:18px;
+  }
+
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal-delay-1.in{ transition-delay:.12s; }
+  .reveal-delay-2.in{ transition-delay:.24s; }
+  .reveal-delay-3.in{ transition-delay:.36s; }
+
+  .frame{ overflow:hidden; position:relative; background:var(--charcoal); }
+  .frame img{ width:100%; height:100%; object-fit:cover; transition:transform 1.4s cubic-bezier(.16,1,.3,1); }
+  .frame:hover img{ transform:scale(1.06); }
+
+  /* ---------------- HEADER ---------------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:28px 0; transition:background .5s ease, padding .4s ease, border-color .4s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{ background:rgba(248,248,246,0.92); backdrop-filter:blur(10px); padding:18px 0; border-color:rgba(47,49,51,0.08); }
+  nav{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{ font-family:'Bodoni Moda',serif; font-size:22px; letter-spacing:0.04em; color:var(--white); transition:color .4s ease; }
+  header.scrolled .brand{ color:var(--charcoal); }
+  .brand span{ color:var(--gold); }
+  .navlinks{ display:flex; gap:42px; font-size:13px; letter-spacing:0.05em; text-transform:uppercase; color:rgba(255,255,255,0.86); font-weight:500; transition:color .4s ease; }
+  header.scrolled .navlinks{ color:var(--dark); }
+  .navlinks a{ position:relative; padding-bottom:4px; }
+  .navlinks a::after{ content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--gold); transition:width .35s cubic-bezier(.16,1,.3,1); }
+  .navlinks a:hover::after{ width:100%; }
+  .nav-phone{ font-size:13px; letter-spacing:0.04em; color:rgba(255,255,255,0.86); border-left:1px solid rgba(255,255,255,0.3); padding-left:24px; transition:color .4s ease, border-color .4s ease; }
+  header.scrolled .nav-phone{ color:var(--charcoal); border-color:rgba(47,49,51,0.2); }
+  @media (max-width:980px){ .navlinks{display:none;} .nav-phone{display:none;} }
+
+  /* ---------------- HERO ---------------- */
+  .hero{ position:relative; height:100vh; min-height:680px; width:100%; overflow:hidden; display:flex; align-items:flex-end; }
+  .hero-bg{ position:absolute; inset:0; z-index:0; }
+  .hero-bg img{ width:100%; height:100%; object-fit:cover; will-change:transform; }
+  .hero-scrim{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(20,20,20,0.42) 0%, rgba(20,20,20,0.15) 38%, rgba(20,20,20,0.74) 100%); z-index:1; }
+  .hero-content{ position:relative; z-index:2; width:100%; padding:0 0 110px; color:var(--white); }
+  .hero-kicker{ font-size:12.5px; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); font-weight:600; margin-bottom:26px; }
+  .hero h1{ font-size:clamp(42px, 6.4vw, 96px); line-height:1.04; max-width:920px; color:var(--white); }
+  .hero-sub{ margin-top:28px; max-width:460px; font-size:16.5px; line-height:1.7; color:rgba(255,255,255,0.82); font-weight:300; }
+  .hero-actions{ display:flex; align-items:center; gap:32px; margin-top:44px; flex-wrap:wrap; }
+
+  .btn-outline{ display:inline-flex; align-items:center; gap:12px; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; font-weight:600; color:var(--white); border:1px solid var(--gold); padding:17px 34px; transition:background .4s ease, color .4s ease; }
+  .btn-outline:hover{ background:var(--gold); color:var(--charcoal); }
+  .btn-outline.dark{ color:var(--charcoal); border-color:var(--charcoal); }
+  .btn-outline.dark:hover{ background:var(--charcoal); color:var(--white); }
+  .link-arrow{ font-size:13px; letter-spacing:0.05em; color:var(--white); border-bottom:1px solid rgba(255,255,255,0.5); padding-bottom:3px; }
+
+  .scroll-cue{ position:absolute; right:56px; bottom:44px; z-index:2; writing-mode:vertical-rl; color:rgba(255,255,255,0.7); font-size:11.5px; letter-spacing:0.2em; text-transform:uppercase; display:flex; align-items:center; gap:14px; }
+  .scroll-cue::after{ content:''; width:1px; height:52px; background:rgba(255,255,255,0.5); display:block; animation:cue 2.2s ease-in-out infinite; }
+  @keyframes cue{ 0%{ transform:scaleY(0); transform-origin:top;} 50%{ transform:scaleY(1); transform-origin:top;} 51%{ transform-origin:bottom;} 100%{ transform:scaleY(0); transform-origin:bottom;} }
+  @media (max-width:900px){ .scroll-cue{ display:none; } }
+
+  /* ---------------- ABOUT / MANIFESTO ---------------- */
+  section{ padding:170px 0; }
+  @media (max-width:900px){ section{ padding:100px 0; } }
+
+  .about-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:100px; align-items:center; }
+  .about-media{ position:relative; height:600px; }
+  .about-media .frame-main{ position:absolute; top:0; left:0; width:78%; height:82%; }
+  .about-media .frame-accent{ position:absolute; bottom:0; right:0; width:52%; height:46%; border:8px solid var(--bg); box-shadow:0 30px 60px rgba(47,49,51,0.18); }
+  .about-media .plaque{
+    position:absolute; top:38%; right:-6%; background:var(--charcoal); color:var(--white); padding:26px 30px;
+    width:190px; font-family:'Bodoni Moda',serif; font-style:italic; font-size:15px; line-height:1.5; z-index:3;
+    box-shadow:0 20px 40px rgba(47,49,51,0.22);
+  }
+  .about-media .plaque span{ display:block; margin-top:14px; font-family:'Manrope',sans-serif; font-style:normal; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); }
+
+  .about-copy h2{ font-size:clamp(32px,3.6vw,48px); line-height:1.15; margin-bottom:32px; }
+  .about-copy p{ font-size:16.5px; line-height:1.85; color:var(--dark); font-weight:300; margin-bottom:22px; max-width:540px; }
+  .about-copy p strong{ color:var(--charcoal); font-weight:600; }
+
+  .stat-strip{ display:flex; margin-top:56px; gap:0; flex-wrap:wrap; }
+  .stat-item{ padding-right:44px; margin-right:44px; border-right:1px solid rgba(47,49,51,0.15); }
+  .stat-item:last-child{ border-right:none; }
+  .stat-item b{ display:block; font-family:'Bodoni Moda',serif; font-size:40px; font-weight:500; color:var(--charcoal); }
+  .stat-item span{ font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--dark); }
+  @media (max-width:900px){ .about-grid{ grid-template-columns:1fr; gap:70px; } .about-media{ height:420px; } .about-media .plaque{ right:0; } }
+
+  /* ---------------- GALLERY ---------------- */
+  .gallery-section{ background:var(--charcoal); color:var(--white); padding:170px 0; }
+  .gallery-head{ display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:64px; gap:24px; flex-wrap:wrap; }
+  .gallery-head h2{ color:var(--white); font-size:clamp(32px,3.6vw,48px); max-width:560px; }
+  .gallery-head p{ max-width:340px; color:rgba(255,255,255,0.62); font-size:14.5px; line-height:1.7; font-weight:300; }
+  .gallery-head .eyebrow{ color:var(--gold); }
+
+  .masonry{ columns:4 240px; column-gap:22px; }
+  @media (max-width:900px){ .masonry{ columns:2 200px; } }
+  .masonry .frame{ margin-bottom:22px; break-inside:avoid; cursor:zoom-in; position:relative; }
+  .masonry .frame img{ width:100%; height:auto; object-fit:cover; }
+  .masonry .cap{ position:absolute; left:0; right:0; bottom:0; padding:16px 18px; font-size:12px; letter-spacing:0.04em; color:var(--white); background:linear-gradient(0deg, rgba(0,0,0,0.55), transparent); opacity:0; transition:opacity .4s ease; }
+  .masonry .frame:hover .cap{ opacity:1; }
+
+  /* lightbox */
+  .lightbox{ position:fixed; inset:0; background:rgba(20,20,20,0.94); z-index:200; display:none; align-items:center; justify-content:center; padding:40px; }
+  .lightbox.open{ display:flex; }
+  .lightbox img{ max-width:90vw; max-height:86vh; object-fit:contain; box-shadow:0 30px 80px rgba(0,0,0,0.5); }
+  .lightbox-close{ position:absolute; top:36px; right:48px; color:var(--white); font-size:14px; letter-spacing:0.1em; text-transform:uppercase; cursor:pointer; border:1px solid rgba(255,255,255,0.4); padding:10px 18px; }
+
+  /* ---------------- PROGRAMS ---------------- */
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; flex-wrap:wrap; margin-bottom:70px; }
+  .section-head h2{ font-size:clamp(32px,3.6vw,48px); max-width:600px; }
+  .section-head p{ max-width:340px; font-size:14.5px; line-height:1.7; color:var(--dark); font-weight:300; }
+
+  .prog-list{ border-top:1px solid rgba(47,49,51,0.15); }
+  .prog-row{
+    display:grid; grid-template-columns:70px 1fr 220px 40px; align-items:center; gap:30px;
+    padding:34px 0; border-bottom:1px solid rgba(47,49,51,0.15); transition:padding-left .4s cubic-bezier(.16,1,.3,1);
+    cursor:default;
+  }
+  .prog-row:hover{ padding-left:14px; }
+  .prog-row .idx{ font-family:'Bodoni Moda',serif; font-size:15px; color:var(--gold); }
+  .prog-row h3{ font-size:26px; font-weight:500; }
+  .prog-row p{ font-size:14px; color:var(--dark); font-weight:300; line-height:1.6; }
+  .prog-row .arrow{ font-size:20px; color:var(--charcoal); opacity:0; transform:translateX(-8px); transition:all .4s cubic-bezier(.16,1,.3,1); justify-self:end; }
+  .prog-row:hover .arrow{ opacity:1; transform:translateX(0); }
+  @media (max-width:900px){ .prog-row{ grid-template-columns:40px 1fr; row-gap:10px; } .prog-row p{ grid-column:2/3; } .prog-row .arrow{ display:none; } }
+
+  /* ---------------- PROCESS ---------------- */
+  .process-section{ background:var(--white); }
+  .timeline{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; position:relative; margin-top:20px; }
+  .timeline::before{ content:''; position:absolute; top:26px; left:0; right:0; height:1px; background:rgba(47,49,51,0.15); }
+  .tl-step{ padding-right:50px; position:relative; }
+  .tl-step .tl-num{ width:52px; height:52px; border:1px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Bodoni Moda',serif; font-size:18px; color:var(--gold); background:var(--white); position:relative; z-index:1; margin-bottom:32px; }
+  .tl-step h3{ font-size:21px; margin-bottom:14px; }
+  .tl-step p{ font-size:14.5px; color:var(--dark); line-height:1.75; font-weight:300; }
+  @media (max-width:900px){ .timeline{ grid-template-columns:1fr; gap:50px; } .timeline::before{ display:none; } }
+
+  /* ---------------- TESTIMONIALS ---------------- */
+  .quotes-section{ background:var(--bg); }
+  .quotes-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:50px; }
+  .quote-card{ padding-top:34px; border-top:1px solid rgba(47,49,51,0.18); }
+  .quote-card:nth-child(2){ margin-top:46px; }
+  .quote-mark{ font-family:'Bodoni Moda',serif; font-size:52px; color:var(--gold); line-height:1; margin-bottom:6px; display:block; }
+  .quote-card p.qt{ font-family:'Bodoni Moda',serif; font-style:italic; font-size:19px; line-height:1.55; color:var(--charcoal); margin-bottom:26px; }
+  .quote-by{ font-size:12.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--dark); }
+  @media (max-width:900px){ .quotes-grid{ grid-template-columns:1fr; gap:40px; } .quote-card:nth-child(2){ margin-top:0; } }
+
+  /* ---------------- CTA STRIP ---------------- */
+  .cta-strip{ background:var(--charcoal); color:var(--white); padding:110px 0; text-align:center; }
+  .cta-strip .eyebrow{ color:var(--gold); }
+  .cta-strip h2{ color:var(--white); font-size:clamp(30px,4.2vw,54px); max-width:760px; margin:0 auto 40px; line-height:1.2; }
+
+  /* ---------------- CONTACT ---------------- */
+  .contact-grid{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:100px; }
+  .contact-info h2{ font-size:clamp(30px,3.4vw,44px); margin-bottom:28px; max-width:420px; }
+  .contact-info > p{ font-size:15.5px; color:var(--dark); font-weight:300; line-height:1.75; max-width:400px; margin-bottom:44px; }
+  .contact-detail{ margin-bottom:26px; }
+  .contact-detail span{ display:block; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:6px; }
+  .contact-detail a, .contact-detail p{ font-size:16px; color:var(--charcoal); }
+  .map-frame{ margin-top:44px; height:220px; filter:grayscale(0.4) contrast(1.05); border:1px solid rgba(47,49,51,0.15); }
+  .map-frame iframe{ width:100%; height:100%; border:0; }
+
+  .form-panel{ background:var(--white); border:1px solid rgba(47,49,51,0.12); padding:54px; }
+  .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  .field{ margin-bottom:30px; }
+  .field label{ display:block; font-size:11.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--dark); margin-bottom:10px; }
+  .field input, .field select, .field textarea{
+    width:100%; border:none; border-bottom:1px solid rgba(47,49,51,0.25); background:transparent; padding:10px 2px;
+    font-family:'Manrope',sans-serif; font-size:15.5px; color:var(--charcoal); transition:border-color .3s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--gold); }
+  .field textarea{ resize:vertical; min-height:80px; }
+  .form-submit{ width:100%; justify-content:center; background:var(--charcoal); color:var(--white); border:1px solid var(--charcoal); margin-top:10px; }
+  .form-submit:hover{ background:var(--gold); border-color:var(--gold); color:var(--charcoal); }
+  @media (max-width:900px){ .contact-grid{ grid-template-columns:1fr; gap:60px; } .form-panel{ padding:34px; } .form-row{ grid-template-columns:1fr; } }
+
+  /* ---------------- FOOTER ---------------- */
+  footer{ padding:90px 0 40px; border-top:1px solid rgba(47,49,51,0.15); }
+  .foot-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:40px; flex-wrap:wrap; padding-bottom:70px; }
+  .foot-brand{ font-family:'Bodoni Moda',serif; font-size:30px; }
+  .foot-brand span{ color:var(--gold); }
+  .foot-cols{ display:flex; gap:80px; flex-wrap:wrap; }
+  .foot-col h4{ font-size:11.5px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:18px; font-weight:600; }
+  .foot-col a, .foot-col p{ display:block; font-size:14.5px; color:var(--dark); margin-bottom:12px; }
+  .foot-bottom{ display:flex; justify-content:space-between; padding-top:30px; border-top:1px solid rgba(47,49,51,0.12); font-size:12.5px; color:var(--dark); flex-wrap:wrap; gap:12px; }
+</style>
+</head>
+<body>
+
+<header id="site-header">
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="brand">ESK<span>İ</span>Z <span style="font-size:13px; letter-spacing:0.15em; opacity:.75; margin-left:6px;">AKADEMİ</span></a>
+      <div class="navlinks">
+        <a href="#akademi">Akademi</a>
+        <a href="#atolye">Atölye</a>
+        <a href="#programlar">Programlar</a>
+        <a href="#basari">Başarı</a>
+        <a href="#iletisim">İletişim</a>
+      </div>
+      <a href="tel:+902125550123" class="nav-phone">+90 212 555 01 23</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="hero-bg" id="heroImg">
+    <img src="assets/atolye-02.jpg" alt="Eskiz Akademi atölyesinde canlı model çizim dersi">
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="hero-content wrap">
+    <div class="hero-kicker">Eskiz Akademi — Güzel Sanatlara Hazırlık</div>
+    <h1>Sanat yeteneği,<br>doğru eğitimle gelişir.</h1>
+    <p class="hero-sub">Karakalem, figür etüdü ve kompozisyonun her gün yeniden kurulduğu bir atölye. Güzel sanatlar fakültelerine ve liselerine hazırlanan öğrenciler için, İstanbul'da.</p>
+    <div class="hero-actions">
+      <a href="#iletisim" class="btn-outline">Ön Görüşme Talep Et</a>
+      <a href="#akademi" class="link-arrow">Akademiyi keşfedin →</a>
+    </div>
+  </div>
+  <div class="scroll-cue">Aşağı kaydırın</div>
+</section>
+
+<section id="akademi">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="about-media reveal">
+        <div class="frame frame-main">
+          <img src="assets/atolye-01.jpg" alt="Eskiz Akademi koridorunda sergilenen karakalem çalışmalar">
+        </div>
+        <div class="frame frame-accent">
+          <img src="assets/cizim-01.jpg" alt="Öğrenci karakalem figür çizimi">
+        </div>
+        <div class="plaque">"Önce göz, sonra el, sonra karakter."<span>Atölye İlkesi</span></div>
+      </div>
+      <div class="about-copy reveal reveal-delay-1">
+        <div class="eyebrow">Akademi</div>
+        <h2>Bir okul değil,<br>bir atölye kurduk.</h2>
+        <p>Eskiz Akademi, güzel sanatlar fakültelerine ve liselerine hazırlanan öğrenciler için kurulmuş bir çizim ve kompozisyon atölyesidir. Her sınıf, gerçek bir stüdyo mantığıyla çalışır: <strong>canlı model, klasik büst ve gerçek natürmort</strong> üzerinden ilerleyen, sonu bitmiş bir işe varan bir süreç.</p>
+        <p>Öğrencilerimiz burada yalnızca teknik öğrenmez; bakmayı, ölçmeyi ve sabretmeyi öğrenir. Kadromuz, sınıfta anlattığı yöntemi kendi atölyesinde de uygulayan, aktif olarak üreten sanatçılardan oluşur.</p>
+        <div class="stat-strip">
+          <div class="stat-item"><b>19</b><span>Yıllık Deneyim</span></div>
+          <div class="stat-item"><b>640+</b><span>Yerleşen Öğrenci</span></div>
+          <div class="stat-item"><b>14</b><span>Haftalık Atölye</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery-section" id="atolye">
+  <div class="wrap">
+    <div class="gallery-head reveal">
+      <div>
+        <div class="eyebrow">Atölye</div>
+        <h2>Işığın ve çizginin<br>bir arada olduğu yer.</h2>
+      </div>
+      <p>Gündelik ışık, karakalem tozu ve sessiz bir yoğunluk — atölyemizden gerçek kareler.</p>
+    </div>
+    <div class="masonry">
+      <div class="frame reveal" onclick="openLightbox('assets/atolye-03.jpg')"><img src="assets/atolye-03.jpg" alt="Canlı model çizim seansı, geniş atölye"><div class="cap">Canlı Model Seansı</div></div>
+      <div class="frame reveal reveal-delay-1" onclick="openLightbox('assets/cizim-01.jpg')"><img src="assets/cizim-01.jpg" alt="Karakalem figür çizimi detayı"><div class="cap">Öğrenci Çalışması — Karakalem</div></div>
+      <div class="frame reveal reveal-delay-2" onclick="openLightbox('assets/atolye-06.jpg')"><img src="assets/atolye-06.jpg" alt="Atölyede grup çalışması"><div class="cap">Grup Etüdü</div></div>
+      <div class="frame reveal" onclick="openLightbox('assets/atolye-08.jpg')"><img src="assets/atolye-08.jpg" alt="Öğrenciler ayakta çizim yaparken"><div class="cap">Uzun Poz Çalışması</div></div>
+      <div class="frame reveal reveal-delay-1" onclick="openLightbox('assets/atolye-05.jpg')"><img src="assets/atolye-05.jpg" alt="Atölye genel görünüm, sarı duvarlar"><div class="cap">Atölye — Genel Görünüm</div></div>
+      <div class="frame reveal reveal-delay-2" onclick="openLightbox('assets/atolye-09.jpg')"><img src="assets/atolye-09.jpg" alt="Model etüdü sırasında sınıf"><div class="cap">Model Etüdü</div></div>
+      <div class="frame reveal" onclick="openLightbox('assets/atolye-07.jpg')"><img src="assets/atolye-07.jpg" alt="Natürmort köşesi ve çizim masaları"><div class="cap">Natürmort Köşesi</div></div>
+      <div class="frame reveal reveal-delay-1" onclick="openLightbox('assets/atolye-02.jpg')"><img src="assets/atolye-02.jpg" alt="Geniş açıdan atölye ve öğrenciler"><div class="cap">Haftalık Atölye</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="programlar">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Programlar</div>
+        <h2>Her disiplin, kendi bakışını ister.</h2>
+      </div>
+      <p>Fakülte sınavlarının aradığı temel becerilerden, bölüme özel derinleşmeye uzanan bir müfredat.</p>
+    </div>
+    <div class="prog-list reveal">
+      <div class="prog-row">
+        <div class="idx">01</div>
+        <div><h3>Resim &amp; Resim-İş Öğretmenliği</h3></div>
+        <p>Çizgi, ton, figür ve kompozyisyon üzerine temel atölye.</p>
+        <div class="arrow">→</div>
+      </div>
+      <div class="prog-row">
+        <div class="idx">02</div>
+        <div><h3>İç Mimarlık</h3></div>
+        <p>Perspektif, mekan kurgusu ve teknik çizim disiplini.</p>
+        <div class="arrow">→</div>
+      </div>
+      <div class="prog-row">
+        <div class="idx">03</div>
+        <div><h3>Grafik Tasarım</h3></div>
+        <p>Kompozisyon, tipografi ve görsel iletişim temelleri.</p>
+        <div class="arrow">→</div>
+      </div>
+      <div class="prog-row">
+        <div class="idx">04</div>
+        <div><h3>Heykel &amp; Seramik</h3></div>
+        <p>Üç boyutlu form çalışması ve klasik büst etüdü.</p>
+        <div class="arrow">→</div>
+      </div>
+      <div class="prog-row">
+        <div class="idx">05</div>
+        <div><h3>Çizgi Film &amp; Animasyon</h3></div>
+        <p>Karakter tasarımı, hareket ve anlatı temelli çizim.</p>
+        <div class="arrow">→</div>
+      </div>
+      <div class="prog-row">
+        <div class="idx">06</div>
+        <div><h3>Moda &amp; Tekstil Tasarımı</h3></div>
+        <p>Figür, drapaj ve tasarım kompozisyonu üzerine çalışma.</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process-section" id="basari">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Süreç</div>
+        <h2>Nasıl hazırlanacaksınız?</h2>
+      </div>
+      <p>Üç aşamalı, disiplinli ve takip edilebilir bir hazırlık süreci.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-step reveal">
+        <div class="tl-num">01</div>
+        <h3>Temel Atölye</h3>
+        <p>Çizgi, ton ve geometrik form çalışmalarıyla gözün ve elin eğitimi başlar. Natürmort ve obje etütleri bu aşamanın omurgasıdır.</p>
+      </div>
+      <div class="tl-step reveal reveal-delay-1">
+        <div class="tl-num">02</div>
+        <h3>Figür &amp; Portre</h3>
+        <p>Klasik büst, canlı model ve portre çalışmalarıyla artistik anatomiye geçilir. Kompozisyon ve perspektif dersleri eşlik eder.</p>
+      </div>
+      <div class="tl-step reveal reveal-delay-2">
+        <div class="tl-num">03</div>
+        <h3>Bölüme Özel Yoğunlaşma</h3>
+        <p>Öğrencinin hedeflediği bölüme göre portföy ve sınav odaklı, bire bir yönlendirmeli çalışma dönemi.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="quotes-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Yorumlar</div>
+        <h2>Velilerimiz ne diyor?</h2>
+      </div>
+    </div>
+    <div class="quotes-grid">
+      <div class="quote-card reveal">
+        <span class="quote-mark">"</span>
+        <p class="qt">Kızım iki yıldır burada eğitim alıyor. Çizim alanında kendini geliştirme fırsatının yanında, eğitmenlerin sıcakkanlılığı gerçekten fark yaratıyor.</p>
+        <div class="quote-by">Rahime A. — Veli</div>
+      </div>
+      <div class="quote-card reveal reveal-delay-1">
+        <span class="quote-mark">"</span>
+        <p class="qt">Disiplinli ve güvenilir bir ortam. Sınav öncesi ve sonrasında velilere sürekli bilgi veriliyor, öğrenciyle yakından ilgileniliyor.</p>
+        <div class="quote-by">Naci E. — Veli</div>
+      </div>
+      <div class="quote-card reveal reveal-delay-2">
+        <span class="quote-mark">"</span>
+        <p class="qt">Kısa sürede kızıma özgüven ve cesaret kazandırdılar. Hedeflediği güzel sanatlar lisesini bu sayede kazandı.</p>
+        <div class="quote-by">Seval K. — Veli</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="wrap">
+    <div class="eyebrow reveal">Sizi Bekliyoruz</div>
+    <h2 class="reveal reveal-delay-1">Gelin, atölyeyi canlı görün.<br>Bir çayımızı için, misafirimiz olun.</h2>
+    <a href="#iletisim" class="btn-outline reveal reveal-delay-2">Ziyaret Planlayın</a>
+  </div>
+</section>
+
+<section id="iletisim">
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="eyebrow">İletişim</div>
+        <h2>Bir sonraki çiziminizi<br>bizimle konuşun.</h2>
+        <p>Ön görüşme ve atölye ziyareti için formu doldurun, ya da doğrudan arayın.</p>
+        <div class="contact-detail"><span>Telefon</span><a href="tel:+902125550123">+90 212 555 01 23</a></div>
+        <div class="contact-detail"><span>E-posta</span><a href="mailto:merhaba@eskizakademi.com">merhaba@eskizakademi.com</a></div>
+        <div class="contact-detail"><span>Atölye</span><p>Kemankeş Mah. Atölye Sok. No:7, Karaköy, İstanbul</p></div>
+        <div class="map-frame">
+          <iframe src="https://www.google.com/maps?q=Karak%C3%B6y%2C%20%C4%B0stanbul&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+      <div class="form-panel reveal reveal-delay-1">
+        <div class="form-row">
+          <div class="field"><label>Ad Soyad</label><input type="text" placeholder="Adınız ve soyadınız"></div>
+          <div class="field"><label>Telefon</label><input type="tel" placeholder="05xx xxx xx xx"></div>
+        </div>
+        <div class="field"><label>İlgilendiğiniz Program</label>
+          <select>
+            <option>Resim / Resim-İş Öğretmenliği</option>
+            <option>İç Mimarlık</option>
+            <option>Grafik Tasarım</option>
+            <option>Heykel / Seramik</option>
+            <option>Çizgi Film &amp; Animasyon</option>
+            <option>Moda &amp; Tekstil Tasarımı</option>
+          </select>
+        </div>
+        <div class="field"><label>Mesajınız</label><textarea placeholder="Kısaca kendinizden ve hedeflerinizden bahsedin"></textarea></div>
+        <a href="#" class="btn-outline dark form-submit">Talebimi Gönder</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">ESK<span>İ</span>Z AKADEMİ</div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Menü</h4>
+          <a href="#akademi">Akademi</a>
+          <a href="#atolye">Atölye</a>
+          <a href="#programlar">Programlar</a>
+          <a href="#iletisim">İletişim</a>
+        </div>
+        <div class="foot-col">
+          <h4>İletişim</h4>
+          <a href="tel:+902125550123">+90 212 555 01 23</a>
+          <a href="mailto:merhaba@eskizakademi.com">merhaba@eskizakademi.com</a>
+          <p>Karaköy, İstanbul</p>
+        </div>
+        <div class="foot-col">
+          <h4>Takip Et</h4>
+          <a href="#">Instagram</a>
+          <a href="#">Behance</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Eskiz Akademi</span>
+      <span>Önce göz, sonra el, sonra karakter.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lightbox-close">Kapat ✕</div>
+  <img id="lightbox-img" src="" alt="Büyütülmüş görsel">
+</div>
+
+<script>
+  // header scroll state
+  const header = document.getElementById('site-header');
+  const heroImg = document.getElementById('heroImg');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 60);
+    if (heroImg) {
+      const y = Math.min(window.scrollY * 0.35, 160);
+      heroImg.style.transform = `translateY(${y}px) scale(1.08)`;
+    }
+  }, { passive: true });
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // lightbox
+  function openLightbox(src){
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox(){
+    document.getElementById('lightbox').classList.remove('open');
+  }
+</script>
+
+</body>
+</html>
